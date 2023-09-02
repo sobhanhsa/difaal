@@ -13,7 +13,7 @@ datasource db {
 model User {
  
   id Int @id @default(autoincrement())
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -24,4 +24,18 @@ model User {
 
   @@unique([id, email])
 
+}
+
+model Add {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiredAt DateTime 
+
+  title String @db.VarChar(16)
+
+  description String
+
+  userId Int
 }
