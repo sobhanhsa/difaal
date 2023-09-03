@@ -31,7 +31,11 @@ export class AuthController {
 
     @HttpCode(200)
     @Get('signout')
-    signOut(@Res({passthrough:true}) response:Response) {
+    signOut(
+        @Res({passthrough:true}) 
+        response:Response
+    ) 
+    {
         return this.authService.signOutHandler(response)
     }
 
