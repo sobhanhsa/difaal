@@ -3,6 +3,7 @@ import { signInDto, signUpDto } from "./dto";
 import { AuthService } from "./auth.service";
 import { Request, Response, response } from "express";
 import { isLoggedIn } from "./guard/check-auth.guard";
+import { CookieJwtGuard } from "./guard";
 
 @Controller('auth')
 export class AuthController {
@@ -31,7 +32,7 @@ export class AuthController {
         return this.authService.signInHandler(dto, response)
     }
 
-    
+    @UseGuards(CookieJwtGuard)
     @HttpCode(200)
     @Get('signout')
     signOut(
