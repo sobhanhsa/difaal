@@ -23,10 +23,4 @@ export class UserController {
     ) {
         return this.userService.updateUserProfile({id:userId},dto)
     }
-
-
-
-
-
-
 }
