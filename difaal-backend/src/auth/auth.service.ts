@@ -1,11 +1,11 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { signUpDto } from "./dto";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { signInDto, signUpDto } from "./dto";
 import { DataBaseService } from "src/database/database.service";
 import * as argon from 'argon2'
 import { Response } from "express";
 import {  JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 @Injectable()
 export class AuthService {
@@ -48,6 +48,30 @@ export class AuthService {
         }
 
     }
+
+    async signInHandler(dto : signInDto, response:Response) {
+        const user : User = await this.prisma.user.findUnique({
+            where:{
+                email:dto.email
+            }
+        });
+
+        if (!user) throw new NotFoundException("no account with this email exists")
+
+        
+        if (! (await argon.verify(user.hash, dto.password))) throw new 
+            ForbiddenException("incorrect password")
+
+        const token = this.signToken(user.id)
+
+        delete user.hash
+
+        response.cookie('access_token',token)
+
+        return user
+
+    }
+
     signToken(userId : number) {
         const payload = {
             sub:userId
