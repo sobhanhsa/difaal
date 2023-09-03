@@ -29,5 +29,11 @@ export class AuthController {
         return this.authService.signInHandler(dto, response)
     }
 
+    @HttpCode(200)
+    @Get('signout')
+    signOut() {
+        
+    }
+
 
 }
