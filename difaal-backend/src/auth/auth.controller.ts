@@ -18,7 +18,8 @@ export class AuthController {
     {   
         return this.authService.signUpHandler(dto,response)
     }
-
+        
+    @HttpCode(200)
     @Post('signin')
     signIn(
         @Body() dto:signInDto,

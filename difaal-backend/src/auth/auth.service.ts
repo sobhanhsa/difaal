@@ -29,6 +29,8 @@ export class AuthService {
                 },
             })
 
+            delete user.hash
+
             const token = await this.signToken(user.id)
 
             response.cookie('access_token',token)
