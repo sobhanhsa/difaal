@@ -1,14 +1,15 @@
-import { Body, Controller, Get, HttpCode, Post, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { signInDto, signUpDto } from "./dto";
 import { AuthService } from "./auth.service";
 import { Request, Response, response } from "express";
+import { isLoggedIn } from "./guard/check-auth.guard";
 
 @Controller('auth')
 export class AuthController {
 
     constructor(private authService:AuthService){}
 
-    
+    @UseGuards(isLoggedIn)
     @HttpCode(201)
     @Post('signup')
     signUp (
@@ -18,7 +19,8 @@ export class AuthController {
     {   
         return this.authService.signUpHandler(dto,response)
     }
-        
+    
+    @UseGuards(isLoggedIn)
     @HttpCode(200)
     @Post('signin')
     signIn(
@@ -29,6 +31,7 @@ export class AuthController {
         return this.authService.signInHandler(dto, response)
     }
 
+    
     @HttpCode(200)
     @Get('signout')
     signOut(
