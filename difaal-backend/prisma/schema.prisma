@@ -33,6 +33,8 @@ model Add {
   updatedAt DateTime @updatedAt
   expiredAt DateTime 
 
+  photos String[]
+
   title String @db.VarChar(16)
 
   description String
