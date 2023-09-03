@@ -16,7 +16,6 @@ export class AuthController {
         @Res({passthrough:true}) response : Response
     )
     {   
-        console.log('in singup handler')
         return this.authService.signUpHandler(dto,response)
     }
 
