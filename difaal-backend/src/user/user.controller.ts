@@ -21,7 +21,7 @@ export class UserController {
         @UserParamDecorator("id") userId:number,
         @Body() dto     : updateUserDto
     ) {
-        this.userService.updateUserProfile({id:userId},dto)
+        return this.userService.updateUserProfile({id:userId},dto)
     }
 
 

@@ -23,12 +23,15 @@ export class UserService {
                 ...dto
             }})
 
-            return updateUserDto
+            delete updatedUser.hash
+
+            return updatedUser
 
         } catch(e) {
             if ((e instanceof Prisma.PrismaClientKnownRequestError) && (e.code === "P2002")) {            
                 throw new ForbiddenException(
                         "taken email",
+                        e.message
                     );
             }
             
