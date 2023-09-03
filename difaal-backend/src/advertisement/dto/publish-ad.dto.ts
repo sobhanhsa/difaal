@@ -8,7 +8,7 @@ export class publishAdDto {
     title:string
     
     @IsArray()
-    photos:string
+    photos:string[]
     
     @IsString()
     @IsNotEmpty()
