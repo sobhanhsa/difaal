@@ -64,13 +64,25 @@ export class AuthService {
         if (! (await argon.verify(user.hash, dto.password))) throw new 
             ForbiddenException("incorrect password")
 
-        const token = this.signToken(user.id)
+        const token = await this.signToken(user.id)
 
         delete user.hash
 
         response.cookie('access_token',token)
 
         return user
+
+    }
+
+    signOutHandler(response:Response) {    
+
+        response.cookie('access_token','false',{
+            expires: new Date(Date.now() - 1000000000)
+        })
+
+        return {
+            message:"you're successfully signed out"
+        }
 
     }
 

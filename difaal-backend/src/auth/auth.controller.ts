@@ -1,7 +1,7 @@
-import { Body, Controller, Get, HttpCode, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Req, Res } from "@nestjs/common";
 import { signInDto, signUpDto } from "./dto";
 import { AuthService } from "./auth.service";
-import { Response } from "express";
+import { Request, Response, response } from "express";
 
 @Controller('auth')
 export class AuthController {
@@ -23,7 +23,7 @@ export class AuthController {
     @Post('signin')
     signIn(
         @Body() dto:signInDto,
-        @Res({passthrough:true}) response : Response
+        @Res({passthrough:true}) response : Response,
     ) 
     {
         return this.authService.signInHandler(dto, response)
@@ -31,8 +31,8 @@ export class AuthController {
 
     @HttpCode(200)
     @Get('signout')
-    signOut() {
-        
+    signOut(@Res({passthrough:true}) response:Response) {
+        return this.authService.signOutHandler(response)
     }
 
 
