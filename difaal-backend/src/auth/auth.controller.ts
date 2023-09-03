@@ -1,13 +1,23 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, Res } from "@nestjs/common";
 import { signUpDto } from "./dto";
+import { AuthService } from "./auth.service";
+import { Response } from "express";
 
-@Controller()
+@Controller('auth')
 export class AuthController {
+
+    constructor(private authService:AuthService){}
+
     
     @HttpCode(201)
     @Post('signup')
-    signUp (@Body() dto:signUpDto) {
-
+    signUp (
+        @Body() dto:signUpDto, 
+        @Res({passthrough:true}) response : Response
+    )
+    {   
+        console.log('in singup handler')
+        return this.authService.signUpHandler(dto,response)
     }
 
 }
