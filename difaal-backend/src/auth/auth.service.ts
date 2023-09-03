@@ -33,7 +33,9 @@ export class AuthService {
 
             const token = await this.signToken(user.id)
 
-            response.cookie('access_token',token)
+            response.cookie('access_token',token,{
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+            })
 
             return user
 
@@ -68,7 +70,9 @@ export class AuthService {
 
         delete user.hash
 
-        response.cookie('access_token',token)
+        response.cookie('access_token',token ,{
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+        })
 
         return user
 
